@@ -3,6 +3,7 @@ import styleSheet from './AddUser.module.css'
 import Card from '../UI/Card'
 import Button from '../UI/Button'
 import ErrorModal from '../UI/ErrorModal'
+import Wrapper from '../Wrapper/Wrapper'
 const AddUser = (props) => {
   const [userName,setUserName]=useState('')
   const [userAge,setUserAge]=useState('')
@@ -42,9 +43,11 @@ if(+userAge<1){
   const errorHandler =(props)=>{
     setError(null)
   }
+ 
   
+
   return (
-    <div>{
+    <Wrapper>{
       err &&(
         <ErrorModal title={err.title} 
         message={err.message}
@@ -52,9 +55,6 @@ if(+userAge<1){
          />
       )
       }
-     
-
-
         <Card className={styleSheet.input}>
               <form onSubmit={addUserHandler}>
                     <label htmlFor='username' >UserName</label>
@@ -66,8 +66,9 @@ if(+userAge<1){
               </form>
 
             </Card>
-    </div>
+    </Wrapper>
   )
 }
+
 
 export default AddUser
