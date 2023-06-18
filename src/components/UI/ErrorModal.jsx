@@ -35,7 +35,4 @@ const ErrorModal = (props) => {
     </>
   )
 }
-
-// What features does React- DOM library get us.What does adapter mean?
-
 export default ErrorModal

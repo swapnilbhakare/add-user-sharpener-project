@@ -1,47 +1,51 @@
-import React,{useState} from 'react'
+import React,{useState,useRef} from 'react'
 import styleSheet from './AddUser.module.css'
 import Card from '../UI/Card'
 import Button from '../UI/Button'
 import ErrorModal from '../UI/ErrorModal'
 import Wrapper from '../Wrapper/Wrapper'
 const AddUser = (props) => {
-  const [userName,setUserName]=useState('')
-  const [userAge,setUserAge]=useState('')
-  const [err,setError]=useState();
+ const nameInputRef= useRef();
+ const ageInputRef= useRef();
+ const collageNameInputRef  =useRef()
+
+  const [err,setErr]=useState();
 
 
 const addUserHandler=(event)=>{
   event.preventDefault()
-if(userName.trim().length===0 || userAge.trim().length===0){
-  setError({
+  const enterdName= nameInputRef.current.value
+ const enterdAge= ageInputRef.current.value
+ const enterdCollageName = collageNameInputRef.current.value
+
+
+
+if(enterdName.trim().length===0 || enterdAge.trim().length===0 || enterdCollageName.trim().length===0 ){
+  setErr({
     title:"Invalid input",
-    message:"Please enter a valid name and age"
+    message:"Please enter a valid name and age and college Name"
   })
   return
 }
-if(+userAge<1){
-  setError({
+if(+enterdAge<1){
+  setErr({
     title:"Invalid age",
     message: 'Please enter a valid age (>0).'
   })
   return
 
 }
-  props.onAddUser(userName,userAge)
-  setUserName('')
-  setUserAge('')
+  props.onAddUser(enterdName,enterdAge,enterdCollageName)
+  nameInputRef.current.value=''
+  ageInputRef.current.value=''
+  collageNameInputRef.current.value=''
+
+  
 }
 
-  const userNameHandler=(event)=>{
-    setUserName(event.target.value)
-    
-  }
-  const userAgeHandler=(event)=>{
-    setUserAge(event.target.value)
 
-  }
   const errorHandler =(props)=>{
-    setError(null)
+    setErr(null)
   }
  
   
@@ -58,10 +62,15 @@ if(+userAge<1){
         <Card className={styleSheet.input}>
               <form onSubmit={addUserHandler}>
                     <label htmlFor='username' >UserName</label>
-                    <input type="text" id='username' value={userName}  onChange={userNameHandler}/>
+                    <input type="text" ref={nameInputRef}
+                     id='username'/>
               
                     <label htmlFor='age'>Age</label>
-                    <input type="number" id='age' value={userAge} onChange={userAgeHandler}/>
+                    <input type="number" ref={ageInputRef}
+                     id='age'/>
+                      <label htmlFor='collageName'>Collage Name</label>
+                    <input type="text" ref={collageNameInputRef}
+                     id='age'/>
                   <Button type='submit'>Add User</Button>
               </form>
 
